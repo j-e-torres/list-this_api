@@ -1,0 +1,44 @@
+{
+  "name": "list-this_api",
+  "version": "1.0.0",
+  "description": "API for ListThis",
+  "main": "app.js",
+  "jest": {
+    "verbose": true,
+    "setupFilesAfterEnv": [
+      "./jest.setup.js"
+    ]
+  },
+  "scripts": {
+    "start": "NODE_ENV=production node ./app.js",
+    "start:dev": "NODE_ENV=development nodemon ./app.js",
+    "test:models": "NODE_ENV=test jest --runInBand --detectOpenHandles --watch  ./src/api/tests/modelTests/",
+    "test:api": "NODE_ENV=test jest --runInBand --detectOpenHandles --watch  ./src/api/tests/apiTests/"
+  },
+  "author": "Juan",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv-safe": "^6.1.0",
+    "express": "^4.17.1",
+    "helmet": "^4.5.0",
+    "http-status": "^1.5.0",
+    "jwt-simple": "^0.5.6",
+    "morgan": "^1.10.0",
+    "pg": "^8.6.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.6.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jest": "^24.4.0",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.4.0",
+    "supertest": "^6.1.3"
+  }
+}

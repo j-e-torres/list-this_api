@@ -1,0 +1,5 @@
+{
+  "root": true,
+  "plugins": ["import", "jest"],
+  "extends": ["airbnb", "prettier", "plugin:jest/recommended", "plugin:import/recommended"]
+}
