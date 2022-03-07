@@ -143,6 +143,8 @@ User.authenticate = async function authenticate(options) {
 
     if (user && (await user.passwordMatches(password))) {
       return { user, accessToken: user.token() };
+    } else {
+      return {user: null, accessToken: null};
     }
   } catch (error) {
     return new APIError(error);

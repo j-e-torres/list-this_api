@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const { User } = require('../models');
+const APIError = require('../utils/APIError');
 
 const createResponseToken = (user, accessToken) => {
   const tokenType = 'Bearer';
@@ -33,11 +34,19 @@ exports.register = async (req, res, next) => {
 };
 
 exports.login = async (req, res, next) => {
+
   try {
     const { user, accessToken } = await User.authenticate(req.body);
 
-    const token = createResponseToken(user, accessToken);
+    if (!user) {
+      return next(new APIError({
+        status: httpStatus.NOT_FOUND,
+        message: 'User not found with credentials',
+        isPublic: true,
+      }));
+    }
 
+    const token = createResponseToken(user, accessToken);
     return res.status(httpStatus.OK).json({
       status: httpStatus.OK,
       token,
