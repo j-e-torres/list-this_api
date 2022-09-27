@@ -127,7 +127,7 @@ User.authenticate = async function authenticate(options) {
   }
 
   try {
-    const user = await this.scope('login').findOne({
+    const user = await User.findOne({
       where: { username },
       include: [
         {
@@ -141,7 +141,10 @@ User.authenticate = async function authenticate(options) {
       ],
     });
 
-    if (user && (await user.passwordMatches(password))) {
+    const userWithPassword = await this.scope('login').findOne({
+      where: {username}
+    })
+    if (userWithPassword && (await userWithPassword.passwordMatches(password))) {
       return { user, accessToken: user.token() };
     } else {
       return {user: null, accessToken: null};
