@@ -1,6 +1,8 @@
 const httpStatus = require('http-status');
 const { User } = require('../models');
 const APIError = require('../utils/APIError');
+const { jwtSecret } = require('../../config/vars');
+const jwt = require('jwt-simple');
 
 const createResponseToken = (user, accessToken) => {
   const tokenType = 'Bearer';
@@ -58,3 +60,35 @@ exports.login = async (req, res, next) => {
     return next(error);
   }
 };
+
+exports.tokenLogin = async (req, res, next) => {
+  const { headers } = req;
+
+  const apiError = new APIError({
+    message: 'Invalid token',
+    status: httpStatus.BAD_REQUEST
+  });
+
+  let decodedID;
+
+  try {
+    decodedID = await jwt.decode(headers.authorization, jwtSecret);
+  } catch (error) {
+    return next(apiError);
+  }
+
+  try {
+    const user = await User.getUser(decodedID);
+    return res.status(httpStatus.OK).json({
+      status: httpStatus.OK,
+      data: {
+        user,
+      },
+    });
+
+  } catch (error) {
+
+    return next(error);
+  }
+
+}

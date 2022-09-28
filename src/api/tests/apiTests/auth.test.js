@@ -129,4 +129,29 @@ describe('Authentication API', () => {
       expect(res.body.message).toBe('Incorrect username or password');
     });
   });
+
+  describe.only('GET /v1/auth/login', () => {
+    test('Should return user that matches authorization token in headers', async  () => {
+      const token = supermanAdmin.token();
+      const res = await request(app)
+        .get('/v1/auth/login')
+        .set('authorization', token)
+        .expect(httpStatus.OK);
+
+      expect(res.body.data.user.username).toBe(supermanAdmin.username);
+      expect(res.body.data.user).toHaveProperty('lists');
+
+    });
+
+    test('should return `Invalid token` if toke invalid', async () => {
+      const token = '123213213';
+      const res = await request(app)
+        .get('/v1/auth/login')
+        .set('authorization', token)
+        .expect(httpStatus.BAD_REQUEST);
+
+      expect(res.body.message).toBe('Invalid token');
+
+    })
+  })
 });
