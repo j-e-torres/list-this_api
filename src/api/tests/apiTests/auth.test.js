@@ -132,7 +132,7 @@ describe('Authentication API', () => {
 
   describe.only('GET /v1/auth/login', () => {
     test('Should return user that matches authorization token in headers', async  () => {
-      const token = supermanAdmin.token();
+      const token = `Bearer ${supermanAdmin.token()}`;
       const res = await request(app)
         .get('/v1/auth/login')
         .set('authorization', token)
@@ -143,14 +143,24 @@ describe('Authentication API', () => {
 
     });
 
-    test('should return `Invalid token` if toke invalid', async () => {
-      const token = '123213213';
+    test('should return `Invalid token` if token is invalid', async () => {
+      const token = 'Bearer 123213213';
       const res = await request(app)
         .get('/v1/auth/login')
         .set('authorization', token)
-        .expect(httpStatus.BAD_REQUEST);
+        .expect(httpStatus.UNAUTHORIZED);
 
       expect(res.body.message).toBe('Invalid token');
+
+    })
+    test('should return `Unauthorized` if no token is present', async () => {
+      const token = 'Bearer';
+      const res = await request(app)
+        .get('/v1/auth/login')
+        .set('authorization', token)
+        .expect(httpStatus.UNAUTHORIZED);
+
+      expect(res.body.message).toBe('Unauthorized');
 
     })
   })
