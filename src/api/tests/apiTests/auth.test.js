@@ -163,5 +163,15 @@ describe('Authentication API', () => {
       expect(res.body.message).toBe('Unauthorized');
 
     })
+    test('should return `Unauthorized` if token is `null`', async () => {
+      const token = null;
+      const res = await request(app)
+        .get('/v1/auth/login')
+        .set('authorization', token)
+        .expect(httpStatus.UNAUTHORIZED);
+
+      expect(res.body.message).toBe('Unauthorized');
+
+    })
   })
 });
