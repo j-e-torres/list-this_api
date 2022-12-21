@@ -36,13 +36,12 @@ describe('User API routes', () => {
           .set('Authorization', `Bearer ${adminAccessToken}`)
           .expect(httpStatus.OK);
 
-        const { status, results, data } = res.body;
+        const { status, data } = res.body;
 
         const firstUser = data.users.find((u) => u.username === 'superman200');
         const secondUser = data.users.find((u) => u.username === 'wondergirl');
 
         expect(status).toBe(httpStatus.OK);
-        expect(results).toBe(2);
         expect(firstUser.username).toBe('superman200');
         expect(secondUser.username).toBe('wondergirl');
       });

@@ -113,6 +113,38 @@ describe('List API routes', () => {
 
         expect(res.body.errors[0].message).toBe('Task name required');
       });
+      test('Should report error when `tasks` do not have `taskName`', async () => {
+        newList.listOwner = wondergirl.username;
+
+        const req = {
+          list: newList,
+          tasks: [''],
+        };
+
+        const res = await request(app)
+          .post('/v1/lists')
+          .set('Authorization', `Bearer ${userAccessToken}`)
+          .send(req)
+          .expect(httpStatus.BAD_REQUEST);
+
+        expect(res.body.errors[0].message).toBe('Task name required');
+      });
+      test('Should report error when `token` is not valid', async () => {
+        newList.listOwner = wondergirl.username;
+
+        const req = {
+          list: newList,
+          tasks: [''],
+        };
+
+        const res = await request(app)
+          .post('/v1/lists')
+          .set('Authorization', `Bearer qqq`)
+          .send(req)
+          .expect(httpStatus.UNAUTHORIZED);
+
+        expect(res.body.message).toBe('Invalid token');
+      });
     });
   });
 

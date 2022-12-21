@@ -8,7 +8,6 @@ exports.getUsers = async (req, res, next) => {
 
     return res.status(httpStatus.OK).json({
       status: httpStatus.OK,
-      results: users.length,
       data: {
         users,
       },
@@ -26,7 +25,6 @@ exports.getLists = async (req, res, next) => {
 
     return res.status(httpStatus.OK).json({
       status: httpStatus.OK,
-      results: lists.length,
       data: {
         lists,
       },
