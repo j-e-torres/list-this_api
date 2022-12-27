@@ -13,7 +13,7 @@ router.use(authMiddleware.authenticate);
 
 router.route('/').post(listController.createList);
 
-router.route('/:listId').delete(listController.deleteList);
+router.route('/:listId').delete(listController.deleteList).get(listController.getList);
 
 router.route('/:listId/users').put(listController.addUser);
 

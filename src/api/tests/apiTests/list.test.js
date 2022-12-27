@@ -37,6 +37,20 @@ describe('List API routes', () => {
     // await cleanDB();
   });
 
+  describe.only('GET routes', () => {
+    describe('GET /v1/lists/:listId', () => {
+      test('should get list with id', async () => {
+
+        const res = await request(app)
+          .get(`/v1/lists/${traderjoes.id}`)
+          .set('Authorization', `Bearer ${userAccessToken}`)
+          .expect(httpStatus.OK);
+
+        expect(res.body.data.list.id).toBe(traderjoes.id);
+      })
+    })
+  });
+
   describe('POST routes', () => {
     describe('POST /v1/lists', () => {
       test('Should be able to create a list with tasks when request is ok', async () => {
@@ -177,13 +191,6 @@ describe('List API routes', () => {
           .set('Authorization', `Bearer ${adminAccessToken}`)
           .send(req)
           .expect(httpStatus.OK);
-
-        // const userLists = await User.getUser(wondergirl.id);
-        // const uggs = await wondergirl.getLists();
-        // console.log('sup son', uggs);
-        // console.log('sup bruh', res.body.data);
-
-        // expect(userLists.lists).toHaveLength(2);
         expect(res.body.data.users).toHaveLength(2);
       });
     });

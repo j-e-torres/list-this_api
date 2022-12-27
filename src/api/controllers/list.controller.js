@@ -94,3 +94,21 @@ exports.addUser = async (req, res, next) => {
     return next(error);
   }
 };
+
+exports.getList = async (req, res, next) => {
+  const { listId } = req.params;
+
+  try {
+    const list = await List.getList(listId);
+
+    return res.status(httpStatus.OK).json({
+      statis: httpStatus.OK,
+      data: {
+        list
+      }
+    })
+  } catch (error) {
+    return next(error);
+  }
+
+}
