@@ -15,7 +15,9 @@
     "test:models": "NODE_ENV=test jest --runInBand --detectOpenHandles --watch  ./src/api/tests/modelTests/",
     "test:api": "NODE_ENV=test jest --runInBand --detectOpenHandles --watch  ./src/api/tests/apiTests/",
     "test:authApi": "NODE_ENV=test jest --runInBand --detectOpenHandles --watch  ./src/api/tests/apiTests/auth.test.js",
-    "test:listApi": "NODE_ENV=test jest --runInBand --detectOpenHandles --watch  ./src/api/tests/apiTests/list.test.js"
+    "test:listApi": "NODE_ENV=test jest --runInBand --detectOpenHandles --watch  ./src/api/tests/apiTests/list.test.js",
+    "test:taskApi": "NODE_ENV=test jest --runInBand --detectOpenHandles --watch  ./src/api/tests/apiTests/task.test.js"
+
   },
   "author": "Juan",
   "license": "ISC",

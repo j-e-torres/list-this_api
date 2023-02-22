@@ -94,7 +94,9 @@ describe('Task API routes', () => {
           .set('Authorization', `Bearer ${userAccessToken}`)
           .expect(httpStatus.OK);
 
-        expect(res.body.data.task.completed).toBe(true);
+        const task = res.body.data.list.tasks.find(t => t.id === oranges.id)
+
+        expect(task.completed).toBe(true);
       });
 
       test('Should report error when `taskId` is invalid', async () => {

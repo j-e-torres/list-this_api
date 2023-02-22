@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const { Task } = require('../models');
+const { Task, List } = require('../models');
 const APIError = require('../utils/APIError');
 
 exports.createTask = async (req, res, next) => {
@@ -32,12 +32,13 @@ exports.createTask = async (req, res, next) => {
 exports.completeTask = async (req, res, next) => {
   try {
     const task = await Task.getTask(req.params.taskId);
-    const completed = await task.completeTask();
+    await task.completeTask();
+    const list = await List.getList(task.listId);
 
     return res.status(httpStatus.OK).json({
       status: httpStatus.OK,
       data: {
-        task: completed,
+        list,
       },
     });
   } catch (error) {
