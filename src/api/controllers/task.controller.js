@@ -33,12 +33,10 @@ exports.completeTask = async (req, res, next) => {
   try {
     const task = await Task.getTask(req.params.taskId);
     await task.completeTask();
-    const list = await List.getList(task.listId);
-
     return res.status(httpStatus.OK).json({
       status: httpStatus.OK,
       data: {
-        list,
+        task,
       },
     });
   } catch (error) {
