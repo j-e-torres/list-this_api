@@ -46,11 +46,16 @@ exports.completeTask = async (req, res, next) => {
 
 exports.deleteTask = async (req, res, next) => {
   try {
+    const task = await Task.getTask(req.params.taskId);
+
     await Task.destroy({ where: { id: req.params.taskId } });
 
-    return res.status(httpStatus.NO_CONTENT).json({
-      status: httpStatus.NO_CONTENT,
+    return res.status(httpStatus.OK).json({
+      status: httpStatus.OK,
       message: 'Successfully deleted',
+      data: {
+        task
+      }
     });
   } catch (error) {
     return next(error);

@@ -94,7 +94,6 @@ describe('Task API routes', () => {
           .set('Authorization', `Bearer ${userAccessToken}`)
           .expect(httpStatus.OK);
 
-
         expect(res.body.data.task.completed).toBe(true);
       });
 
@@ -112,13 +111,15 @@ describe('Task API routes', () => {
   describe('DELETE routes', () => {
     describe('DELETE /v1/tasks/:taskId', () => {
       test('Should be able to delete task', async () => {
-        await request(app)
+        const res = await request(app)
           .delete(`/v1/tasks/${oranges.id}`)
           .set('Authorization', `Bearer ${userAccessToken}`)
-          .expect(httpStatus.NO_CONTENT);
+          .expect(httpStatus.OK);
 
         const tasks = await Task.findAll();
         expect(tasks).toHaveLength(1);
+        expect(res.body.message).toBe('Successfully deleted');
+        expect(res.body.data.task.taskName).toBe(oranges.taskName);
       });
     });
   });

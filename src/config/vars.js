@@ -8,7 +8,7 @@ require('dotenv-safe').load({
 
 module.exports = {
   env: process.env.NODE_ENV,
-  port: process.env.PORT,
+  port: process.env.PORT || 4000,
   postgres: {
     uri:
       process.env.NODE_ENV === 'test'
