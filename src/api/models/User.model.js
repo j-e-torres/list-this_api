@@ -67,8 +67,7 @@ const User = db.define(
         },
         is: {
           args: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})',
-          msg:
-            'Password must be at least 6 characters long, lowercase/uppercase letters, at least 1 number.',
+          msg: 'Password must be at least 6 characters long, lowercase/uppercase letters, at least 1 number.',
         },
       },
     },
@@ -110,7 +109,7 @@ const User = db.define(
     scopes: {
       login: {},
     },
-  }
+  },
 );
 
 // model methods
@@ -142,13 +141,15 @@ User.authenticate = async function authenticate(options) {
     });
 
     const userWithPassword = await this.scope('login').findOne({
-      where: {username}
-    })
-    if (userWithPassword && (await userWithPassword.passwordMatches(password))) {
+      where: { username },
+    });
+    if (
+      userWithPassword &&
+      (await userWithPassword.passwordMatches(password))
+    ) {
       return { user, accessToken: user.token() };
-    } else {
-      return {user: null, accessToken: null};
     }
+    return { user: null, accessToken: null };
   } catch (error) {
     return new APIError(error);
   }

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const httpStatus = require('http-status');
 const jwt = require('jwt-simple');
 const { User } = require('../models');

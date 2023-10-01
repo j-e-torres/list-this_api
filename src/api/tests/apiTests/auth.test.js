@@ -130,7 +130,7 @@ describe('Authentication API', () => {
     });
   });
 
-  describe.only('GET /v1/auth/login', () => {
+  describe('GET /v1/auth/login', () => {
     test('Should return user that matches authorization token in headers', async  () => {
       const token = `Bearer ${supermanAdmin.token()}`;
       const res = await request(app)

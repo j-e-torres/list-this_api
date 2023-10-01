@@ -1,8 +1,6 @@
 const httpStatus = require('http-status');
 const { User } = require('../models');
 const APIError = require('../utils/APIError');
-const { jwtSecret } = require('../../config/vars');
-const jwt = require('jwt-simple');
 
 const createResponseToken = (user, accessToken) => {
   const tokenType = 'Bearer';
@@ -20,7 +18,6 @@ const createResponseToken = (user, accessToken) => {
 exports.register = async (req, res, next) => {
   try {
     const user = await User.create(req.body);
-
     const token = createResponseToken(user, user.token());
 
     return res.status(httpStatus.CREATED).json({
@@ -36,16 +33,17 @@ exports.register = async (req, res, next) => {
 };
 
 exports.login = async (req, res, next) => {
-
   try {
     const { user, accessToken } = await User.authenticate(req.body);
 
     if (!user) {
-      return next(new APIError({
-        status: httpStatus.NOT_FOUND,
-        message: 'User not found with credentials',
-        isPublic: true,
-      }));
+      return next(
+        new APIError({
+          status: httpStatus.NOT_FOUND,
+          message: 'User not found with credentials',
+          isPublic: true,
+        }),
+      );
     }
 
     const token = createResponseToken(user, accessToken);
@@ -61,11 +59,10 @@ exports.login = async (req, res, next) => {
   }
 };
 
-exports.tokenLogin = async (req, res, next) => {
-  return res.status(httpStatus.OK).json({
+exports.tokenLogin = async (req, res) =>
+  res.status(httpStatus.OK).json({
     status: httpStatus.OK,
     data: {
       user: req.user,
     },
   });
-}
