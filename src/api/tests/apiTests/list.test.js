@@ -38,18 +38,31 @@ describe('List API routes', () => {
     // await cleanDB();
   });
 
-  describe('GET routes', () => {
+  describe.only('GET routes', () => {
     describe('GET /v1/lists/:listId', () => {
       test('should get list with id', async () => {
-
         const res = await request(app)
           .get(`/v1/lists/${traderjoes.id}`)
           .set('Authorization', `Bearer ${userAccessToken}`)
-          .expect(httpStatus.OK);
+          // .expect(httpStatus.OK);
+        console.log('GETLISTEST', res.data);
 
         expect(res.body.data.list.id).toBe(traderjoes.id);
-      })
-    })
+      });
+    });
+
+    describe('GET /v1/lists/:listId/users', () => {
+      test('should get list with id with users', async () => {
+        const res = await request(app)
+          .get(`/v1/lists/${traderjoes.id}/users`)
+          .set('Authorization', `Bearer ${userAccessToken}`)
+          .expect(httpStatus.OK);
+
+        const resData = res.body.data;
+
+        expect(resData.users[0].id).toBe(supermanAdmin.id);
+      });
+    });
   });
 
   describe('POST routes', () => {

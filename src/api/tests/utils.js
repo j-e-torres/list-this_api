@@ -74,6 +74,9 @@ exports.populateTestDB = async () => {
   await traderjoes.setTasks(apples);
   await keyfood.setTasks(oranges);
 
+  await traderjoes.setUsers(superman);
+  await keyfood.setUsers(wondergirl);
+
   return {
     tokens: [adminAccessToken, userAccessToken],
     users: [superman, wondergirl],

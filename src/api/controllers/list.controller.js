@@ -68,7 +68,7 @@ exports.addUser = async (req, res, next) => {
         status: httpStatus.UNAUTHORIZED,
         message: 'You are not the list owner',
         isPublic: true,
-      })
+      }),
     );
   }
 
@@ -102,13 +102,29 @@ exports.getList = async (req, res, next) => {
     const list = await List.getList(listId);
 
     return res.status(httpStatus.OK).json({
-      statis: httpStatus.OK,
+      status: httpStatus.OK,
       data: {
-        list
-      }
-    })
+        list,
+      },
+    });
   } catch (error) {
     return next(error);
   }
+};
 
-}
+exports.getListUsers = async (req, res, next) => {
+  try {
+    const list = await List.getList(req.params.listId);
+
+    const users = await list.getUsers();
+
+    return res.status(httpStatus.OK).json({
+      status: httpStatus.OK,
+      data: {
+        users,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+};

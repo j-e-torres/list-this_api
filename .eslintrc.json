@@ -1,5 +1,22 @@
 {
   "root": true,
   "plugins": ["import", "jest"],
-  "extends": ["airbnb", "prettier", "plugin:jest/recommended", "plugin:import/recommended"]
+  "extends": [
+    "airbnb",
+    "prettier",
+    "plugin:jest/recommended",
+    "plugin:import/recommended"
+  ],
+  "rules": {
+    "no-unused-vars": "off"
+  },
+  // "overrides": [
+  //   {
+  //     "files": ["**/*.test.js"], // Example: Apply the following rules only to test files
+  //     "rules": {
+  //       "jest/your-specific-rule": "off"
+  //     }
+  //   }
+  // ]
+
 }
