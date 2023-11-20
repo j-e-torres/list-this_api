@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-identical-title */
 /* eslint-disable no-unused-vars */
 const request = require('supertest');
 const httpStatus = require('http-status');
@@ -37,7 +38,7 @@ describe('List API routes', () => {
     // await cleanDB();
   });
 
-  describe.only('GET routes', () => {
+  describe('GET routes', () => {
     describe('GET /v1/lists/:listId', () => {
       test('should get list with id', async () => {
 

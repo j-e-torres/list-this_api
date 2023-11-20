@@ -62,12 +62,11 @@ const List = db.define('list', {
 List.getList = async function getList(id) {
   try {
     const list = await List.findByPk(id, {
-      include: [Task],
+      include: [{model: Task}, {model: User}],
     });
 
     return list;
   } catch (error) {
-    console.log('am i getting hit');
     throw new APIError({
       status: httpStatus.NOT_FOUND,
       message: 'List does not exist',
