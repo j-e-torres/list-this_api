@@ -38,7 +38,7 @@ describe('List API routes', () => {
     // await cleanDB();
   });
 
-  describe.only('GET routes', () => {
+  describe('GET routes', () => {
     describe('GET /v1/lists/:listId', () => {
       test('should get list with id', async () => {
         const res = await request(app)
